@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" -d mydb <<-EOSQL
+	CREATE EXTENSION IF NOT EXISTS tablefunc;
+	CREATE EXTENSION IF NOT EXISTS dict_xsyn;
+	CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
+	CREATE EXTENSION IF NOT EXISTS pg_trgm;
+	CREATE EXTENSION IF NOT EXISTS cube;
+	SELECT '1'::cube;
+EOSQL
+
