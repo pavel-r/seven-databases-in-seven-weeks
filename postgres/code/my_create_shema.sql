@@ -41,3 +41,26 @@ CREATE TABLE events (
 );
 
 CREATE INDEX events_title ON events USING hash(title);
+
+insert into venues (name, postal_code, country_code) values ('Voodoo Donuts', '97205', 'us') returning venue_id;
+
+insert into events (title, starts, ends, venue_id, event_id) 
+values ('LARP Club', '2012-02-15 17:30:00', '2012-02-15 19:30:00', 2, 1);
+
+insert into events (title, starts, ends, event_id) 
+values ('April Fools Day', '2012-04-01 17:30:00', '2012-04-01 23:59:00', 2);
+
+insert into events (title, starts, ends, event_id) 
+values ('Christmas Day', '2012-12-25 00:00:00', '2012-12-25 23:59:00', 3); 
+
+create index events_start on events using btree (starts);
+
+-- TASK
+
+select e.title, c.country_name from events e 
+ join venues v on e.venue_id = v.venue_id 
+ join countries c on v.country_code = c.country_code;
+
+alter table venues add column active boolean default 'true';
+
+
